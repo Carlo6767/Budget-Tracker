@@ -4,6 +4,45 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pocketwise</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      (() => {
+        const key = 'student-budget-name'
+        const style = document.createElement('style')
+        style.textContent = '.goal-panel,.nav-item:nth-child(4){display:none!important}.content-grid{grid-template-columns:1fr!important}.name-gate{position:fixed;inset:0;z-index:20;display:grid;place-content:center;padding:24px;background:#f7f8f5}.name-gate-card{width:min(100%,460px);padding:34px;border:1px solid #e4e9e5;border-radius:14px;background:#fff;box-shadow:0 20px 50px #24383118}.name-gate-mark{display:grid;place-items:center;width:52px;height:52px;border-radius:15px;color:#fff;background:#254f45;font:30px Georgia,serif}.name-gate h1{margin:28px 0 10px;color:#25323a;font:500 40px/1.08 Georgia,serif}.name-gate p{color:#7b8589;font:14px Trebuchet MS,sans-serif}.name-gate label{display:block;margin-top:24px;color:#65726f;font:700 11px Trebuchet MS,sans-serif}.name-gate input{display:block;width:100%;padding:13px;margin-top:7px;border:1px solid #dce5df;border-radius:7px;font:14px Trebuchet MS,sans-serif}.name-gate button{padding:12px 17px;margin-top:15px;border:0;border-radius:7px;color:#fff;background:#286e5a;font:700 12px Trebuchet MS,sans-serif}'
+        document.head.appendChild(style)
+        const applyName = () => {
+          const saved = localStorage.getItem(key)
+          if (!saved) return
+          document.querySelectorAll('h1').forEach((heading) => { if (heading.textContent.includes('Good morning')) heading.firstChild.textContent = 'Good morning, ' + saved + ' ' })
+          const profileName = document.querySelector('.profile strong')
+          if (profileName) profileName.textContent = saved
+          const avatar = document.querySelector('.profile .avatar')
+          if (avatar) avatar.textContent = saved.slice(0, 2).toUpperCase()
+        }
+        const showGate = () => {
+          if (localStorage.getItem(key)) { applyName(); return }
+          const gate = document.createElement('div')
+          gate.className = 'name-gate'
+          gate.innerHTML = '<div class="name-gate-card"><div class="name-gate-mark">₱</div><h1>Let’s make your money feel a little simpler.</h1><p>First, what should we call you?</p><form><label for="student-name">Your name</label><input id="student-name" placeholder="e.g. Alex" autofocus /><button type="submit">Continue →</button></form></div>'
+          gate.querySelector('form').addEventListener('submit', (event) => { event.preventDefault(); const input = gate.querySelector('input'); const value = input.value.trim(); if (!value) return; localStorage.setItem(key, value); gate.remove(); applyName() })
+          document.body.appendChild(gate)
+        }
+        new MutationObserver(applyName).observe(document.getElementById('root'), { childList: true, subtree: true })
+        showGate()
+      })()
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html><!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>budget-tracker</title>
   </head>
   <body>
