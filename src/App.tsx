@@ -268,6 +268,16 @@ function App() {
           <div className="mobile-brand">
             <span className="brand-mark">₱</span> pocketwise
           </div>
+          <select
+            className="mobile-view-picker"
+            value={activeView}
+            onChange={(event) => setActiveView(event.target.value)}
+            aria-label="Choose view"
+          >
+            <option>Overview</option>
+            <option>Transactions</option>
+            <option>Budgets</option>
+          </select>
           <div className="month-picker">
             <button
               aria-label="Previous month"
